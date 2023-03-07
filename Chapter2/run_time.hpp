@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <iomanip>
 
 
 /**
@@ -8,14 +9,15 @@
  * @param log 打印标头
  * @param func 传入要测试的函数
  */
-template <class Func>
+template<class Func>
 void run_time(std::string log, Func func)
 {
-     auto start = std::chrono::steady_clock::now();
-     func();
-     auto end = std::chrono::steady_clock::now();
-     std::chrono::duration<double> elapsed_seconds = std::chrono::duration<double>(end - start);
+    auto start = std::chrono::steady_clock::now();
+    func();
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed_milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-     std::cout << std::endl
-               << log << ":" << elapsed_seconds.count() << "s\n";
+    std::cout << std::fixed << std::setprecision(3);
+    std::cout << std::endl
+              << log << ":" << elapsed_milliseconds.count() << " ms\n";
 }
